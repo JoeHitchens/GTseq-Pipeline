@@ -1,4 +1,7 @@
 
+// runtime perl = 351
+// runtime js = 18
+
 fs = require("fs");
 path = require("path");
 
@@ -22,7 +25,7 @@ reverse_complement = function(s) {
 }
 
 
-loc_lines = fs.readFileSync(argv[2], "utf8");
+loc_lines = fs.readFileSync(argv[2], "utf8").trim();
 loc_lines = loc_lines.split(/\r?\n/);
 loc_lines = loc_lines.map(function(line) {
 	var a = line.split(",");
@@ -56,8 +59,8 @@ for(var i = 0; i < fastq_lines.length; i += 4) {
 			line.a1c += 1;
 		}
 
-		var p2 = line.p1;
-		var p2rc = line.p1rc;
+		var p2 = line.p2;
+		var p2rc = line.p2rc;
 		if(r1_seq.indexOf(p2) != -1 || r1_seq.indexOf(p2rc) != -1) {
 			line.a2c += 1;
 		}
@@ -112,7 +115,7 @@ loc_lines.forEach(function(line) {
 		genoclass = "HET";
 	}
 
-	I(assays+","+a1name+"="+a1c+","+a2name+"="+a2c+","+ratio+","+geno+","+genoclass);
+	console.log(assays+","+a1name+"="+a1c+","+a2name+"="+a2c+","+ratio+","+geno+","+genoclass);
 
 });
 
