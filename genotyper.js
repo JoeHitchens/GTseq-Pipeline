@@ -1,3 +1,4 @@
+#/usr/local/bin/node
 
 // runtime perl = 351
 // runtime js = 18
