@@ -1,4 +1,6 @@
-#/usr/local/bin/node
+
+// Author: Joe Hitchens, Sleepless Software Inc., joe@sleepless.com
+// Based on a perl script by Nate Campbell
 
 // runtime perl = 351
 // runtime js = 18
@@ -6,8 +8,8 @@
 fs = require("fs");
 path = require("path");
 
-require("sleepless");
-require("g")("log5");
+//require("sleepless");
+//require("g")("log5");
 
 argv = process.argv;
 
@@ -86,34 +88,31 @@ loc_lines.forEach(function(line) {
 
 	var ratio = a1fix / a2fix;
 
-	if(a1c + a2c < 10) {
-		// Set genotypes of low allele count loci to "NA"
-		//geno = "NA";
-		//genoclass = "NA";
-	}
-	else
-	if(ratio >= 10) {
-		// Allele1 Homozygotes
-		geno = a1name + a1name;
-		genoclass = "A1HOM";
-	}
-	else
-	if(ratio <= 0.1) {
-		// Allele2 Homozygotes
-		geno = a2name + a2name;
-		genoclass = "A2HOM";
-	}
-	else
-	if(ratio <= 0.2) {
-		// In-betweeners
-		//geno = "NA";
-		//genoclass = "NA";
-	}
-	else
-	if(ratio <= 5) {
-		// Heterozygotes
-		geno = a1name + a2name;
-		genoclass = "HET";
+	if(a1c + a2c >= 10) {
+		// sufficient allele count to check ratio
+
+		if(ratio >= 10) {
+			// Allele1 Homozygotes
+			geno = a1name + a1name;
+			genoclass = "A1HOM";
+		}
+		else
+		if(ratio <= 0.1) {
+			// Allele2 Homozygotes
+			geno = a2name + a2name;
+			genoclass = "A2HOM";
+		}
+		else
+		if(ratio <= 0.2) {
+			// In-betweeners - leave geno and genoclass as NA
+		}
+		else
+		if(ratio <= 5) {
+			// Heterozygotes
+			geno = a1name + a2name;
+			genoclass = "HET";
+		}
+
 	}
 
 	console.log(assays+","+a1name+"="+a1c+","+a2name+"="+a2c+","+ratio+","+geno+","+genoclass);
